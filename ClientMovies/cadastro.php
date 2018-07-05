@@ -4,9 +4,15 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style2.css">
     <title>Cliente WebService SOAP</title>
   </head>
   <body>
+    <ul>
+  <li><a class="active" href="index">Pesquisar Filmes</a></li>
+  <li><a href="removeFilme">Remover Filme</a></li>
+  <li><a href="atualizar">Atualizar Filme</a></li>  
+</ul>
     <h1>Cliente WS SOAP - Cadastro de Filmes</h1>
 
 
@@ -22,42 +28,7 @@
 
     </form>
 
-    <?php
-
-    class Filme {
-
-        public $titulo;
-        public $diretor;
-        public $estudio;
-        public $genero;
-        public $ano;
-    }
-
-  $client = new SoapClient("http://localhost:8080/Movies/WebMovies?WSDL");
-
-    if (isset($_POST['ano']) && isset($_POST['genero'])
-        && isset($_POST['estudio']) && isset($_POST['diretor']) && isset($_POST['titulo'])){
-
-            $titulo = $_POST['titulo'];
-            $diretor = $_POST['diretor'];
-            $estudio = $_POST['estudio'];
-            $genero = $_POST['genero'];
-            $ano = $_POST['ano'];
-            echo newMovie($titulo, $diretor, $estudio, $genero, $ano);
-        }
-
-    function newMovie($titulo, $diretor, $estudio, $genero, $ano){
-    $filme = $GLOBALS['client']->__soapCall("newMovie",
-    array("parameters"=>array("titulo" => $titulo, "diretor" => $diretor,
-          "estudio" => $estudio, "genero" => $genero, "lancamento" => $ano)));
-
-    $JSON = json_encode($filme);
-
-    print_r($JSON);
-
-    }
-
-    ?>
+    <?php require_once('controller/cadastro_lib.php'); ?>     
 
   </body>
 </html>

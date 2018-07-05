@@ -1,35 +1,6 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <link rel="stylesheet" type="text/css" href="style2.css">
-    <meta charset="utf-8">
-    <title>Cliente WebService SOAP</title>
-  </head>
-  <body>
-    <ul>
-  <li><a class="active" href="index">Pesquisar Filmes</a></li>  
-  <li><a href="cadastro">Cadastrar Filme</a></li>
-  <li><a href="atualizar">Atualizar Filme</a></li>
-</ul>
-    <h1>Cliente WS SOAP - Remover Filme</h1>
+<?php
 
-
-    <form action="" method="post">
-
-      Filme: <input type="text" name="titulo">
-
-      <button type="submit" name="cadastrar">Remover</button>
-
-    </form>
-
-
-    <br>
-    <form action="" method="get">
-        Deseja ver todos os filmes?
-        <button type="submit" name="todos" value="sim">Sim</button>
-    </form>
-
-    <?php
+ini_set("soap.wsdl_cache_enabled", "0");
 
     class Filme {
 
@@ -42,28 +13,28 @@
 
   $client = new SoapClient("http://localhost:8080/Movies/WebMovies?WSDL");
 
-    if ( isset($_POST['titulo'])){
+    if (isset($_POST['novoTitulo']) && isset($_POST['titulo'])){
 
             $titulo = $_POST['titulo'];
-
-            echo removeMovie($titulo);
+            $novoTitulo = $_POST['novoTitulo'];
+            echo updateMovie($titulo, $novoTitulo);
         }
 
     if(isset($_GET['todos'])){
             echo getMovieTodos("Sim");
         }
 
-    function removeMovie($titulo){
 
-      try {
-       $filme = $GLOBALS['client']->__soapCall("removeMovie",
-        array("parameters"=>array("titulo" => $titulo)));
-      } catch (Exception $e) {
+    function updateMovie($titulo, $novoTitulo){
+    try {
+     $filme = $GLOBALS['client']->__soapCall("updateMovie",
+    array("parameters"=>array("titulo" => $titulo, "novoTitulo" => $novoTitulo)));
+    } catch (Exception $e) {
         echo "<br><h1>".$e->getMessage()."</h1><br>";
-      }
+    }
 
     if (isset($filme)) {
-        echo "<br><h1>Filme Removido Com Sucesso</h1><br>";
+        echo "<br><h1>Filme atualizado Com Sucesso</h1><br>";
                  foreach ($filme as $key => $value) {
                     echo "<table>
                               <tr>
@@ -153,6 +124,3 @@
     }
 
     ?>
-
-  </body>
-</html>

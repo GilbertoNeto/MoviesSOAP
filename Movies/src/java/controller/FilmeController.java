@@ -158,5 +158,22 @@ public class FilmeController {
         
         return filmesByTitle;
     }
+    
+     public static List<Filme> AllMovies(String value) throws Exception{
+
+    	FilmeController.inicializar();
+        
+        List<Filme> listaFilmes = new ArrayList<>();
+        
+        if (value.contains("Sim")){
+        
+        listaFilmes = filmeDAO.listar();
+        }
+        if (Objects.isNull(listaFilmes)){
+            throw new Exception("Não foram encontrados filmes para serem listados.");
+        }
+        
+        return listaFilmes;
+    }
 
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import javax.jws.WebResult;
 import model.Filme;
 
 /**
@@ -98,6 +99,15 @@ public class WebMovies {
         Filme filmeUpdated = FilmeController.atualizarFilme(title, newTitle);
         
         return filmeUpdated;
+        
+    }
+    
+    @WebMethod(operationName = "listAll")
+    public List<Filme> listAllMovie(@WebParam(name="value") String value) throws Exception{
+        
+        List<Filme> allMovies = FilmeController.AllMovies("Sim");
+        
+        return allMovies;
         
     }
        
